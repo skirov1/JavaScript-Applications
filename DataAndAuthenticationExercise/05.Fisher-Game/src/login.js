@@ -1,4 +1,6 @@
 document.querySelector('form').addEventListener('submit', onSubmit);
+document.querySelectorAll('a').forEach(x => x.classList.remove('active'));
+document.getElementById('login').classList.add('active');
 
 async function onSubmit(event) {
     event.preventDefault();
@@ -24,7 +26,7 @@ async function onSubmit(event) {
             body: JSON.stringify({
                 email,
                 password
-            })
+            })        
         });
 
         if (response.ok == false) {
@@ -34,11 +36,15 @@ async function onSubmit(event) {
 
         const data = await response.json();
 
-        sessionStorage.setItem('accessToken', data.accessToken);
+        sessionStorage.setItem('userData', JSON.stringify({
+            email: data.email,
+            accessToken: data.accessToken,
+            id: data._id
+        }));
 
         document.querySelector('span').textContent = email;
         
-        window.location = 'http://127.0.0.1:5500/05.Fisher-Game/src/index.html';
+        window.location = './index.html';
         
     } catch(err) {
         document.querySelector('p.notification').textContent = err.message;

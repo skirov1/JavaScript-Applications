@@ -37,9 +37,10 @@ async function onSubmit(event) {
 
         const data = await response.json();
 
+        sessionStorage.setItem('email', data.email);
         sessionStorage.setItem('accessToken', data.accessToken);
 
-        window.location = 'http://127.0.0.1:5500/05.Fisher-Game/src/index.html'; 
+        window.location = './index.html';
 
     } catch(err) {
         document.querySelector('p.notification').textContent = err.message;
